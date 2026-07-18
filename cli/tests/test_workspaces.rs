@@ -58,7 +58,7 @@ fn test_workspaces_add_second_and_third_workspace() {
     main_dir.run_jj(["commit", "-m", "initial"]).success();
 
     let output = main_dir.run_jj(["workspace", "list"]);
-    insta::assert_snapshot!(output, @"
+    insta::assert_snapshot!(output.normalize_backslash(), @"
     default: . rlvkpnrz 504e3d8c (empty) (no description set)
     [EOF]
     ");
@@ -94,7 +94,7 @@ fn test_workspaces_add_second_and_third_workspace() {
 
     // Both workspaces show up when we list them
     let output = main_dir.run_jj(["workspace", "list"]);
-    insta::assert_snapshot!(output, @"
+    insta::assert_snapshot!(output.normalize_backslash(), @"
     default: . rlvkpnrz 504e3d8c (empty) (no description set)
     second: ../secondary rzvqmyuk bcc858e1 (empty) (no description set)
     [EOF]
@@ -537,7 +537,7 @@ fn test_workspaces_add_workspace_from_subdir() {
     main_dir.run_jj(["commit", "-m", "initial"]).success();
 
     let output = main_dir.run_jj(["workspace", "list"]);
-    insta::assert_snapshot!(output, @"
+    insta::assert_snapshot!(output.normalize_backslash(), @"
     default: . rlvkpnrz 0ba0ff35 (empty) (no description set)
     [EOF]
     ");
@@ -555,7 +555,7 @@ fn test_workspaces_add_workspace_from_subdir() {
 
     // Both workspaces show up when we list them
     let output = secondary_dir.run_jj(["workspace", "list"]);
-    insta::assert_snapshot!(output, @"
+    insta::assert_snapshot!(output.normalize_backslash(), @"
     default: ../main rlvkpnrz 0ba0ff35 (empty) (no description set)
     secondary: . rzvqmyuk dea1be10 (empty) (no description set)
     [EOF]
@@ -639,7 +639,7 @@ fn test_workspace_add_override_path_in_store() {
 
     // Both workspaces show up when we list them
     let output = main_dir.run_jj(["workspace", "list"]);
-    insta::assert_snapshot!(output, @"
+    insta::assert_snapshot!(output.normalize_backslash(), @"
     default: . rlvkpnrz 504e3d8c (empty) (no description set)
     second: ../secondary pmmvwywv 058f604d (empty) (no description set)
     [EOF]
@@ -655,7 +655,7 @@ fn test_workspace_add_override_path_in_store() {
 
     // Only default workspace show up when we list them
     let output = main_dir.run_jj(["workspace", "list"]);
-    insta::assert_snapshot!(output, @"
+    insta::assert_snapshot!(output.normalize_backslash(), @"
     default: . rlvkpnrz 504e3d8c (empty) (no description set)
     [EOF]
     ");
@@ -673,7 +673,7 @@ fn test_workspace_add_override_path_in_store() {
 
     // Both workspaces show up when we list them
     let output = main_dir.run_jj(["workspace", "list"]);
-    insta::assert_snapshot!(output, @"
+    insta::assert_snapshot!(output.normalize_backslash(), @"
     default: . rlvkpnrz 504e3d8c (empty) (no description set)
     second: ../tertiary spxsnpux 96ef6c50 (empty) (no description set)
     [EOF]
@@ -1471,7 +1471,7 @@ fn test_workspaces_forget() {
 
     // When listing workspaces, only the secondary workspace shows up
     let output = main_dir.run_jj(["workspace", "list"]);
-    insta::assert_snapshot!(output, @"
+    insta::assert_snapshot!(output.normalize_backslash(), @"
     secondary: ../secondary pmmvwywv 31da1455 (empty) (no description set)
     [EOF]
     ");
@@ -1586,7 +1586,7 @@ fn test_workspaces_forget_multi_transaction() {
 
     // there should be three workspaces
     let output = main_dir.run_jj(["workspace", "list"]);
-    insta::assert_snapshot!(output, @"
+    insta::assert_snapshot!(output.normalize_backslash(), @"
     default: . rlvkpnrz f6bf8819 (empty) (no description set)
     second: ../second pmmvwywv 31da1455 (empty) (no description set)
     third: ../third rzvqmyuk bf5b5b4d (empty) (no description set)
@@ -1617,7 +1617,7 @@ fn test_workspaces_forget_multi_transaction() {
 
     // finally, there should be three workspaces at the end
     let output = main_dir.run_jj(["workspace", "list"]);
-    insta::assert_snapshot!(output, @"
+    insta::assert_snapshot!(output.normalize_backslash(), @"
     default: . rlvkpnrz f6bf8819 (empty) (no description set)
     second: pmmvwywv 31da1455 (empty) (no description set)
     third: rzvqmyuk bf5b5b4d (empty) (no description set)
@@ -1643,7 +1643,7 @@ fn test_workspaces_forget_abandon_commits() {
 
     // there should be four workspaces, three of which are at the same empty commit
     let output = main_dir.run_jj(["workspace", "list"]);
-    insta::assert_snapshot!(output, @"
+    insta::assert_snapshot!(output.normalize_backslash(), @"
     default: . qpvuntsm 006bd113 (no description set)
     fourth: ../fourth uuqppmxq 94f41578 (empty) (no description set)
     second: ../second uuqppmxq 94f41578 (empty) (no description set)
@@ -1876,7 +1876,7 @@ fn test_workspaces_relative_path() -> TestResult {
     ");
 
     let output = main_dir.run_jj(["workspace", "list"]);
-    insta::assert_snapshot!(output, @"
+    insta::assert_snapshot!(output.normalize_backslash(), @"
     default: . qpvuntsm e8849ae1 (empty) (no description set)
     secondary: ../secondary uuqppmxq 94f41578 (empty) (no description set)
     [EOF]
@@ -2021,7 +2021,7 @@ fn test_workspaces_rename_workspace() {
 
     // Both workspaces show up when we list them
     let output = main_dir.run_jj(["workspace", "list"]);
-    insta::assert_snapshot!(output, @"
+    insta::assert_snapshot!(output.normalize_backslash(), @"
     default: . qpvuntsm e8849ae1 (empty) (no description set)
     second: ../secondary uuqppmxq 94f41578 (empty) (no description set)
     [EOF]
@@ -2031,7 +2031,7 @@ fn test_workspaces_rename_workspace() {
     insta::assert_snapshot!(output, @"");
 
     let output = main_dir.run_jj(["workspace", "list"]);
-    insta::assert_snapshot!(output, @"
+    insta::assert_snapshot!(output.normalize_backslash(), @"
     default: . qpvuntsm e8849ae1 (empty) (no description set)
     third: ../secondary uuqppmxq 94f41578 (empty) (no description set)
     [EOF]
